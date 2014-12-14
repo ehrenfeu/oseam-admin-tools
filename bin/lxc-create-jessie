@@ -15,6 +15,10 @@ fi
 
 BASEDIR=/scratch/containers
 
+if [ -z "$1" ] ; then
+    echo "No name given for container!"
+    exit 2
+fi
 VM_HOSTNAME=$1
 
 export LANG=C
