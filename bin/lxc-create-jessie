@@ -3,6 +3,16 @@
 # exit immediately on any error
 set -e
 
+HOST_DIST=$(lsb_release -i -s)
+HOST_REL=$(lsb_release -r -s)
+if [ "$HOST_DIST $HOST_REL" != "Ubuntu 13.10" ] ; then
+    cat << EOT
+NOTE: this script is meant for Ubuntu 13.10 (saucy), for other releases, Debian
+installations (or even other distributions) it might not work correctly!
+EOT
+    exit 1
+fi
+
 BASEDIR=/scratch/containers
 
 VM_HOSTNAME=$1
