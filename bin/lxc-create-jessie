@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# exit immediately on any error
+set -e
+
+BASEDIR=/scratch/containers
+
+VM_HOSTNAME=$1
+
+export LANG=C
+export LC_ALL=C
+export SUITE=jessie
+
+lxc-create --lxcpath=$BASEDIR --name=$VM_HOSTNAME -t debian
+# install sysvinit-core and systemd-shim (see Debian bug #766233 for details)
+chroot $BASEDIR/$VM_HOSTNAME/rootfs apt-get update
+chroot $BASEDIR/$VM_HOSTNAME/rootfs apt-get -y install sysvinit-core systemd-shim
+
+lxc-start --lxcpath=$BASEDIR --name=$VM_HOSTNAME -d
+lxc-ls --lxcpath=$BASEDIR --fancy --fancy-format name,ipv4 | grep $VM_HOSTNAME | cut -d ' ' -f 2-
