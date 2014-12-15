@@ -46,8 +46,8 @@ TGT_ROOT="$BASEDIR/$VM_HOSTNAME/rootfs"
 lxc-create --lxcpath=$BASEDIR --name=$VM_HOSTNAME -t debian
 echo "deb $MIRROR jessie main" > $TGT_ROOT/etc/apt/sources.list
 # install sysvinit-core and systemd-shim (see Debian bug #766233 for details)
-chroot $BASEDIR/$VM_HOSTNAME/rootfs apt-get update
-chroot $BASEDIR/$VM_HOSTNAME/rootfs apt-get -y install sysvinit-core systemd-shim
+chroot $TGT_ROOT apt-get update
+chroot $TGT_ROOT apt-get -y install sysvinit-core systemd-shim
 
 # configure ssh-access for the root account
 mkdir $TGT_ROOT/root/.ssh
