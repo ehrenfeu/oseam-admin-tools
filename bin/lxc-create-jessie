@@ -50,6 +50,8 @@ echo "deb $MIRROR jessie main" > $TGT_ROOT/etc/apt/sources.list
 chroot $TGT_ROOT apt-get update
 chroot $TGT_ROOT apt-get -y install sysvinit-core systemd-shim
 
+# prevent sshd's stupid behaviour of overriding the locale environment:
+sed -i 's,^AcceptEnv,#AcceptEnv,' $TGT_ROOT/etc/ssh/sshd_config
 # configure default locale
 sed -i "s,^# $TGT_LOCALE,$TGT_LOCALE," $TGT_ROOT/etc/locale.gen
 chroot $TGT_ROOT locale-gen
