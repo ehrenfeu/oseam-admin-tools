@@ -39,10 +39,12 @@ AUTH_KEYS=$2
 export LANG=C
 export LC_ALL=C
 export SUITE=jessie
+export MIRROR="http://http.debian.net/debian"
 
 TGT_ROOT="$BASEDIR/$VM_HOSTNAME/rootfs"
 
 lxc-create --lxcpath=$BASEDIR --name=$VM_HOSTNAME -t debian
+echo "deb $MIRROR jessie main" > $TGT_ROOT/etc/apt/sources.list
 # install sysvinit-core and systemd-shim (see Debian bug #766233 for details)
 chroot $BASEDIR/$VM_HOSTNAME/rootfs apt-get update
 chroot $BASEDIR/$VM_HOSTNAME/rootfs apt-get -y install sysvinit-core systemd-shim
