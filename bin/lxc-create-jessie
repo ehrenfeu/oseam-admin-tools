@@ -62,4 +62,7 @@ mkdir $TGT_ROOT/root/.ssh
 cp $AUTH_KEYS $TGT_ROOT/root/.ssh/authorized_keys
 
 lxc-start --lxcpath=$BASEDIR --name=$VM_HOSTNAME -d
+echo "Waiting for container to start up..."
+sleep 10
+echo "Trying to find IP address:"
 lxc-ls --lxcpath=$BASEDIR --fancy --fancy-format name,ipv4 | grep $VM_HOSTNAME | cut -d ' ' -f 2-
