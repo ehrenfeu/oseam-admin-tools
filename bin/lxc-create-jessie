@@ -61,6 +61,9 @@ chroot $TGT_ROOT update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 mkdir $TGT_ROOT/root/.ssh
 cp $AUTH_KEYS $TGT_ROOT/root/.ssh/authorized_keys
 
+# ensure hostname resolution is working
+echo "127.0.1.1 $VM_HOSTNAME" >> $TGT_ROOT/etc/hosts
+
 lxc-start --lxcpath=$BASEDIR --name=$VM_HOSTNAME -d
 echo "Waiting for container to start up..."
 sleep 10
