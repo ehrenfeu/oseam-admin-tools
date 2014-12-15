@@ -3,6 +3,15 @@
 # exit immediately on any error
 set -e
 
+usage_exit() {
+    echo
+    echo "Usage:"
+    echo
+    echo "    $0 container_name /path/to/ssh_pubkey_or_authorized_keys"
+    echo
+    exit $1
+}
+
 HOST_DIST=$(lsb_release -i -s)
 HOST_REL=$(lsb_release -r -s)
 if [ "$HOST_DIST $HOST_REL" != "Ubuntu 13.10" ] ; then
@@ -10,25 +19,37 @@ if [ "$HOST_DIST $HOST_REL" != "Ubuntu 13.10" ] ; then
 NOTE: this script is meant for Ubuntu 13.10 (saucy), for other releases, Debian
 installations (or even other distributions) it might not work correctly!
 EOT
-    exit 1
+    exit 100
 fi
 
 BASEDIR=/scratch/containers
 
 if [ -z "$1" ] ; then
-    echo "No name given for container!"
-    exit 2
+    echo "ERROR: No name given for container!"
+    usage_exit 1
 fi
 VM_HOSTNAME=$1
+
+if [ -z "$2" ] ; then
+    echo "ERROR: No file for 'authorized_keys' given!"
+    usage_exit 2
+fi
+AUTH_KEYS=$2
 
 export LANG=C
 export LC_ALL=C
 export SUITE=jessie
 
+TGT_ROOT="$BASEDIR/$VM_HOSTNAME/rootfs"
+
 lxc-create --lxcpath=$BASEDIR --name=$VM_HOSTNAME -t debian
 # install sysvinit-core and systemd-shim (see Debian bug #766233 for details)
 chroot $BASEDIR/$VM_HOSTNAME/rootfs apt-get update
 chroot $BASEDIR/$VM_HOSTNAME/rootfs apt-get -y install sysvinit-core systemd-shim
+
+# configure ssh-access for the root account
+mkdir $TGT_ROOT/root/.ssh
+cp $AUTH_KEYS $TGT_ROOT/root/.ssh/authorized_keys
 
 lxc-start --lxcpath=$BASEDIR --name=$VM_HOSTNAME -d
 lxc-ls --lxcpath=$BASEDIR --fancy --fancy-format name,ipv4 | grep $VM_HOSTNAME | cut -d ' ' -f 2-
