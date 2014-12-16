@@ -44,9 +44,17 @@ TGT_ROOT="$BASEDIR/$VM_HOSTNAME/rootfs"
 TGT_LOCALE="en_US.UTF-8"
 
 lxc-create --lxcpath=$BASEDIR --name=$VM_HOSTNAME -t debian
+
 echo "deb $MIRROR jessie main" > $TGT_ROOT/etc/apt/sources.list
+if [ -z "$LOCALPKGS" ] ; then
+    chroot $TGT_ROOT apt-get update
+else
+    echo "Using local packges and lists: $LOCALPKGS"
+    cp "$LOCALPKGS/lists/"* "$TGT_ROOT/var/lib/apt/lists/"
+    cp "$LOCALPKGS/archives/"*.deb "$TGT_ROOT/var/cache/apt/archives/"
+    chroot $TGT_ROOT apt-cache gencaches
+fi
 # install sysvinit-core and systemd-shim (see Debian bug #766233 for details)
-chroot $TGT_ROOT apt-get update
 chroot $TGT_ROOT apt-get -y install sysvinit-core systemd-shim
 
 # prevent sshd's stupid behaviour of overriding the locale environment:
