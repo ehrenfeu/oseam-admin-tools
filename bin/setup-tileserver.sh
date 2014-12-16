@@ -7,8 +7,6 @@ export LC_ALL=C
 ## Please take care to make this script idempotent, i.e. running it 
 ## again should not change anything.
 
-# echo 'deb http://http.debian.net/debian jessie main contrib' > /etc/apt/sources.list
-
 apt-get update
 apt-get install -y postgresql postgresql-contrib postgis postgresql-9.4-postgis-2.1 sudo vim
 
@@ -34,12 +32,8 @@ mkdir /opt/src
 cd /opt/src
 git clone git://github.com/openstreetmap/mod_tile.git
 cd mod_tile
-# ./autogen.sh
-# ./configure
-# make
-# sudo make install
-# sudo make install-mod_tile
-# sudo ldconfig
+# ./autogen.sh && ./configure && make && make install && make install-mod_tile
+# ldconfig
 dpkg-buildpackage -b
 
 cd ..
