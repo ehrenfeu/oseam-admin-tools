@@ -40,7 +40,11 @@ cd mod_tile
 # sudo make install
 # sudo make install-mod_tile
 # sudo ldconfig
-# 
+dpkg-buildpackage -b
+
+cd ..
+dpkg -i renderd_*.deb
+dpkg -i libapache2-mod-tile_*.deb
 # (...)
 # sudo mkdir /var/run/renderd
 # sudo chown openseamap /var/run/renderd
