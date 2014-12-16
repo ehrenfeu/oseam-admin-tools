@@ -28,7 +28,7 @@ ALTER TABLE geometry_columns OWNER TO openseamap;
 ALTER TABLE spatial_ref_sys OWNER TO openseamap;
 '
 
-apt-get install osm2pgsql python-mapnik mapnik-utils apache2 apache2-dev
+apt-get install osm2pgsql python-mapnik mapnik-utils apache2 apache2-dev libmapnik-dev autoconf automake m4 libtool git
 
 # mkdir ~/src
 # cd ~/src
