@@ -23,7 +23,7 @@ echo "openseamap:openseamap" | chpasswd openseamap
 
 # Set up the database:
 cd /
-sudo -u postgres psql gis -c 'CREATE EXTENSION postgis;
+sudo -u postgres -i psql gis -c 'CREATE EXTENSION postgis;
 ALTER TABLE geometry_columns OWNER TO openseamap;
 ALTER TABLE spatial_ref_sys OWNER TO openseamap;
 '
