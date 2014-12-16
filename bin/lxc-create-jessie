@@ -71,8 +71,7 @@ cp $AUTH_KEYS $TGT_ROOT/root/.ssh/authorized_keys
 # ensure hostname resolution is working
 echo "127.0.1.1 $VM_HOSTNAME" >> $TGT_ROOT/etc/hosts
 
-lxc-start --lxcpath=$BASEDIR --name=$VM_HOSTNAME -d
-echo "Waiting for container to start up..."
-sleep 10
-echo "Trying to find IP address:"
-lxc-ls --lxcpath=$BASEDIR --fancy --fancy-format name,ipv4 | grep $VM_HOSTNAME | cut -d ' ' -f 2-
+echo
+echo "Use the following commands to start it and/or check its status:"
+echo "  # lxc-start --lxcpath=$BASEDIR --name=$VM_HOSTNAME -d"
+echo "  # lxc-ls --lxcpath=$BASEDIR --fancy"
