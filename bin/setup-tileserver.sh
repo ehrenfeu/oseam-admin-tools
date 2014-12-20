@@ -38,9 +38,8 @@ dpkg-buildpackage -b
 
 cd ..
 dpkg -i renderd_*.deb
-dpkg -i libapache2-mod-tile_*.deb
-# (...)
-# sudo mkdir /var/run/renderd
+DEBIAN_FRONTEND=noninteractive dpkg -i libapache2-mod-tile_*.deb
+
 # sudo chown openseamap /var/run/renderd
 # sudo mkdir /var/lib/mod_tile
 # sudo chown openseamap /var/lib/mod_tile/
