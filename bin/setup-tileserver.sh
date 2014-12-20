@@ -7,8 +7,8 @@ export LC_ALL=C
 ## Please take care to make this script idempotent, i.e. running it 
 ## again should not change anything.
 
-apt-get update
-apt-get install -y postgresql postgresql-contrib postgis postgresql-9.4-postgis-2.1 sudo vim
+# apt-get update
+apt-get -y install postgresql postgresql-contrib postgis postgresql-9.4-postgis-2.1 sudo vim
 
 # In the following "openseamap" can be replaced with any username that should
 # be used:
@@ -26,7 +26,7 @@ ALTER TABLE geometry_columns OWNER TO openseamap;
 ALTER TABLE spatial_ref_sys OWNER TO openseamap;
 '
 
-apt-get install osm2pgsql python-mapnik mapnik-utils apache2 apache2-dev libmapnik-dev autoconf automake m4 libtool git
+apt-get -y install osm2pgsql python-mapnik mapnik-utils apache2 apache2-dev libmapnik-dev autoconf automake m4 libtool git
 
 mkdir /opt/src
 cd /opt/src
