@@ -76,3 +76,4 @@ echo
 echo "Use the following commands to start it and/or check its status:"
 echo "  # lxc-start --lxcpath=$BASEDIR --name=$VM_HOSTNAME -d"
 echo "  # lxc-ls --lxcpath=$BASEDIR --fancy"
+echo "  # ssh -i $AUTH_KEYS root@$VM_HOSTNAME"
