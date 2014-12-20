@@ -41,9 +41,8 @@ dpkg -i renderd_*.deb
 DEBIAN_FRONTEND=noninteractive dpkg -i libapache2-mod-tile_*.deb
 
 # sudo chown openseamap /var/run/renderd
-# sudo mkdir /var/lib/mod_tile
 # sudo chown openseamap /var/lib/mod_tile/
-# 
-# osm2pgsql --slim -d gis -C 1000 --number-processes 3 denmark-latest.osm.pbf
-# Osm2pgsql took 581s overall
 
+# PBF has to be a FULL path!
+PBF=/tmp/monaco-latest.osm.pbf
+sudo -u openseamap -i osm2pgsql --slim -d gis -C 1000 --number-processes 3 $PBF
